@@ -6,13 +6,13 @@ import sba.sms.services.CourseService;
 import sba.sms.services.StudentService;
 
 public class CommandLine {
-    private CommandLine(){
+    private CommandLine() {
         // Utility classes should not have public constructors
     }
-    private static final String PASSWORD = "password";
 
+    // private static final String PASSWORD = "password";
+    public static void addData() {
 
-    public static void addData(){
         StudentService studentService = new StudentService();
         CourseService courseService = new CourseService();
         String instructorPhillip = "Phillip Witkin";
