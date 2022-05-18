@@ -10,7 +10,7 @@ public class CommandLine {
         // Utility classes should not have public constructors
     }
 
-    // private static final String PASSWORD = "password";
+    private static final String PASSWORD = "password";
     public static void addData() {
 
         StudentService studentService = new StudentService();
