@@ -4,6 +4,8 @@ import jakarta.persistence.TypedQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import sba.sms.dao.StudentI;
 import sba.sms.models.Course;
 import sba.sms.models.Student;
@@ -11,6 +13,7 @@ import sba.sms.utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentService implements StudentI {
 
@@ -126,17 +129,21 @@ public class StudentService implements StudentI {
     public List<Course> getStudentCourses(String email) {
         Session s = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
+        String sql = "select co.id, co.name, co.instructor from Course as co join student_course as sc on co.id = sc.courses_id join Student as st on st.email= sc.student_email where st.email = :email";
+        List<Course> courseList = null;
         try {
             tx = s.beginTransaction();
-            TypedQuery<Course> q = s.createNamedQuery("findStudentCourses");
-            q.setParameter("s", s);
-            return q.getResultList();
-
+            // text block is a java 15 feature """ """
+            NativeQuery q = s.createNativeQuery(sql,Course.class);
+            q.setParameter("email", getStudentByEmail(email).getEmail());
+            courseList = q.getResultList();
+            tx.commit();
         } catch (HibernateException exception) {
+            if (tx!=null) tx.rollback();
             exception.printStackTrace();
         } finally {
             s.close();
         }
-        return new ArrayList<>();
+        return courseList;
     }
 }
