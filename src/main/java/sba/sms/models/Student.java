@@ -13,10 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 @Table(name = "student")
+@Entity
 public class Student {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
     @Column(length = 50, unique = true,name = "email")
     String email;

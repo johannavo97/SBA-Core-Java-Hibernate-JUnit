@@ -29,4 +29,9 @@ public class Course {
     @ToString.Exclude
     @ManyToMany(mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER )
     List<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student){
+        students.add(student);
+        student.getCourses().add(this);
+    }
 }
