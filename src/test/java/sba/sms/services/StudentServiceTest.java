@@ -3,6 +3,8 @@ package sba.sms.services;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import sba.sms.models.Student;
 import sba.sms.utils.CommandLine;
@@ -38,4 +40,15 @@ class StudentServiceTest {
         assertThat(studentService.getAllStudents()).hasSameElementsAs(expected);
 
     }
+    @Test
+    @DisplayName("Create Student and assert size increased to 6 total students")
+    void createStudent() {
+        studentService.createStudent(new Student("thanhtruc2009@gmail.com", "thanh vo", "password"));
+        Student actual = studentService.getStudentByEmail("thanhtruc2009@gmail.com");
+        assertThat(actual).extracting(Student::getEmail).isEqualTo("thanhtruc2009@gmail.com");
+        assertThat(studentService.getAllStudents()).isNotEmpty().hasSize(6);
+
+    }
+
+
 }
