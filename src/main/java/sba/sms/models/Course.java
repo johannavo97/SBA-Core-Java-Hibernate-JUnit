@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NamedQuery(name = "findStudentCourses", query = "from Course where student = :s")
 @Entity
 @Table(name = "course")
 public class Course {

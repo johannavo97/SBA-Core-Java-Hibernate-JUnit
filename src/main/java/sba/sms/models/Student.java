@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "student")
 @Entity
 public class Student {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @NonNull
     @Column(length = 50, unique = true,name = "email")
     String email;
