@@ -33,6 +33,6 @@ public class Student {
     @ManyToMany( fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "student_course",
             joinColumns = @JoinColumn(name = "student_email"), inverseJoinColumns = @JoinColumn(name = "courses_id"))
-    List<Course> courses = new ArrayList<>(new LinkedHashSet<>());
+    List<Course> courses = new ArrayList<>();
 }
 
