@@ -21,9 +21,20 @@ public class StudentService implements StudentI {
     @Override
     public List<Student> getAllStudents() {
         Session s = HibernateUtil.getSessionFactory().openSession();
-        List<Student> students = s.createQuery("from Student",Student.class).getResultList();
-        s.close();
+        Transaction tx = null;
+        List<Student> students = null;
+        try {
+            tx = s.beginTransaction();
+            students = s.createQuery("from Student",Student.class).getResultList();
+            tx.commit();
+        } catch (HibernateException exception) {
+            if (tx!=null) tx.rollback();
+            exception.printStackTrace();
+        } finally {
+            s.close();
+        }
         return students;
+
     }
 
     @Override
