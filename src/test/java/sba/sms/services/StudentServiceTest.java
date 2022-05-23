@@ -2,14 +2,17 @@ package sba.sms.services;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import sba.sms.models.Course;
 import sba.sms.models.Student;
 import sba.sms.utils.CommandLine;
+import sba.sms.utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,11 +62,4 @@ class StudentServiceTest {
         assertThat(studentService.getStudentByEmail("annette@gmail.com")).extracting(student-> student.getPassword()).isEqualTo("password");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"reema brown", "annette allen", "anthony gallegos","ariadna ramirez", "bolaji saibu"})
-    void testNamesFromDb(String names) {
-        List<Student> list = studentService.getAllStudents();
-        assertThat(list).extracting(Student::getName).contains(names);
-
-    }
 }
