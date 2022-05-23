@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -34,5 +31,18 @@ public class Student {
     @JoinTable(name = "student_course",
             joinColumns = @JoinColumn(name = "student_email"), inverseJoinColumns = @JoinColumn(name = "courses_id"))
     List<Course> courses = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return email.equals(student.email) && name.equals(student.name) && password.equals(student.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, name, password);
+    }
 }
 

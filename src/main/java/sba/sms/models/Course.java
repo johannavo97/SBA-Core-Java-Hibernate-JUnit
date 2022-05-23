@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -27,9 +24,22 @@ public class Course {
     @Column(length = 50, nullable = false)
     String instructor;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id && name.equals(course.name) && instructor.equals(course.instructor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, instructor);
+    }
+
     @ToString.Exclude
     @ManyToMany(mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER )
-    Set<Student> students = new LinkedHashSet<>();
+    List<Student> students = new ArrayList<>();
 
     public void addStudent(Student student){
         students.add(student);
