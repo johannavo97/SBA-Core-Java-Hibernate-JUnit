@@ -5,7 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class Course {
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER )
-    List<Student> students = new ArrayList<>();
+    Set<Student> students = new LinkedHashSet<>();
 
     public void addStudent(Student student){
         students.add(student);
