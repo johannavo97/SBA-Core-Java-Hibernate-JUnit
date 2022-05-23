@@ -7,12 +7,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import sba.sms.models.Course;
 import sba.sms.models.Student;
 import sba.sms.utils.CommandLine;
-import sba.sms.utils.HibernateUtil;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,16 +29,19 @@ class StudentServiceTest {
     }
 
     @Test
+    @Order(3)
     void getAllStudents() {
         List<Student> expected = new ArrayList<>(Arrays.asList(
                 new Student("reema@gmail.com", "reema brown", "password"),
                 new Student("annette@gmail.com", "annette allen", "password"),
                 new Student("anthony@gmail.com", "anthony gallegos", "password"),
                 new Student("ariadna@gmail.com", "ariadna ramirez", "password"),
-                new Student("bolaji@gmail.com", "bolaji saibu", "password")
+                new Student("bolaji@gmail.com", "bolaji saibu", "password"),
+                new Student("thanhtruc2009@gmail.com", "thanh vo", "password")
         ));
 
         assertThat(studentService.getAllStudents().size()).isEqualTo(expected.size());
+
 
     }
     @Test
